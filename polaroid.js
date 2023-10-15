@@ -18,26 +18,43 @@ const loadImage = () => {
     previewImg.src = URL.createObjectURL(file)
 }
 
+// draw preview canvas
 const draw = () => {
     console.log('draw')
-    let canvas = document.getElementById("img_canvas")
-    canvas.width = frame_1.naturalWidth
-    canvas.height = frame_1.naturalHeight
     let imgRatio = previewImg.naturalHeight / previewImg.naturalWidth
-    let ctx = canvas.getContext('2d')
-    ctx.drawImage(previewImg, 19, 38, 468, 506*imgRatio)
+    let canvas = document.getElementById("img_canvas")
+
     if(506*imgRatio < 620) {
-        ctx.drawImage(frame_1, 0, 0, frame_1.naturalWidth, 506*imgRatio + 182)
+        
+        canvas.width = frame_1.naturalWidth
+        canvas.height = (506*imgRatio + 182)
+        let ctx = canvas.getContext('2d')
+        ctx.fillStyle = "#fff"
+        ctx.fillRect(0,0,506,(506*imgRatio + 182))
+        ctx.drawImage(previewImg, 19, 38, 468, 506*imgRatio)
+        ctx.drawImage(frame_1, 0, 0, frame_1.naturalWidth, (506*imgRatio + 182))
+        
     } else {
+        canvas.width = frame_1.naturalWidth
+        canvas.height = frame_1.naturalHeight
+        let ctx = canvas.getContext('2d')
+        ctx.drawImage(previewImg, 19, 38, 468, 506*imgRatio)
         ctx.drawImage(frame_1, 0, 0)
     }
     
 }
 
-const saveImg = () => {
-    console.log('save image')
-    
+// downlod image
+const save = (canvas) => {
+    const link = document.createElement("a")
+    link.download = "image.jpg"
+    link.href = canvas.toDataURL()
+    link.click()
+}
 
+// draw result image and save
+const drawImg = () => {
+    console.log('save image')
     let imgRatio = previewImg.naturalHeight / previewImg.naturalWidth
     let canvas = document.createElement("canvas")
     
@@ -60,13 +77,10 @@ const saveImg = () => {
         ctx.drawImage(frame_1, 0, 0)
     }
 
-    const link = document.createElement("a")
-    link.download = "image.jpg"
-    link.href = canvas.toDataURL()
-    link.click()
+    save(canvas)
 }
 
 uploadBtn.addEventListener('click',()=>{fileInput.click()})
 fileInput.addEventListener('change',loadImage)
 generateBtn.addEventListener('click',draw)
-saveImgBtn.addEventListener('click', saveImg)
+saveImgBtn.addEventListener('click', drawImg)

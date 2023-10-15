@@ -1,6 +1,8 @@
 
 #img_canvas {
-    border:1px solid grey
+    border:1px solid grey;
+    width: 126.5px;
+    height: 200.5px;
 }
 
 .frame-preview {
