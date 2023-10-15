@@ -36,15 +36,27 @@ const draw = () => {
 
 const saveImg = () => {
     console.log('save image')
-    let canvas = document.createElement("canvas")
-    canvas.width = frame_1.naturalWidth
-    canvas.height = frame_1.naturalHeight
+    
+
     let imgRatio = previewImg.naturalHeight / previewImg.naturalWidth
-    let ctx = canvas.getContext('2d')
-    ctx.drawImage(previewImg, 19, 38, 468, 506*imgRatio)
+    let canvas = document.createElement("canvas")
+    
     if(506*imgRatio < 620) {
+        
+        canvas.width = frame_1.naturalWidth
+        canvas.height = 506*imgRatio + 182
+        let ctx = canvas.getContext('2d')
+        ctx.fillStyle = "#fff"
+        ctx.fillRect(0,0,506,506*imgRatio + 182)
+        ctx.drawImage(previewImg, 19, 38, 468, 506*imgRatio)
         ctx.drawImage(frame_1, 0, 0, frame_1.naturalWidth, 506*imgRatio + 182)
+        
     } else {
+        
+        canvas.width = frame_1.naturalWidth
+        canvas.height = frame_1.naturalHeight
+        let ctx = canvas.getContext('2d')
+        ctx.drawImage(previewImg, 19, 38, 468, 506*imgRatio)
         ctx.drawImage(frame_1, 0, 0)
     }
 
