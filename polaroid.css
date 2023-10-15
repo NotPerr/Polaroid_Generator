@@ -5,6 +5,7 @@
     height: 200.5px;
 }
 
-.frame-preview {
+.frame-style {
     width: 63.25px;
+    cursor: pointer;
 }
