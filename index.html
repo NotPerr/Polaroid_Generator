@@ -1,34 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="stylesheet" href="./polaroid.css">
+    <link rel="stylesheet" href="./polaroid.css" />
     <title>Polaroid Generator</title>
-</head>
-<body>
-    <h1>Ploloroid Generator</h1>
-    <input id="file_input" type="file" accept="image/*" hidden>
-    <button id="upload_image">Upload Image</button>
+  </head>
+  <body>
+    <h1>Polaroid Generator</h1>
+    <main>
+      <div>
+        <input id="file_input" type="file" accept="image/*" hidden />
+        <button id="upload_image">Upload Image</button>
 
-    <div class="preview-img">
-        <img src="./placeholder-image.png">
-    </div>
+        <div class="preview-img">
+          <img src="./placeholder-image.png" />
+        </div>
 
-    <button id="generate_btn">Generate</button>
-    <br />
-    <br />
-    <!-- result preview -->
-    <canvas id="img_canvas"></canvas>
-    <br />
-    <button id="save_img">Save Image</button>
-    <img id="frame_1" src="./frames/frame.png" class="frame-style">
-    <img id="frame_2" src="./frames/frame_2.png" class="frame-style">
-    <img id="frame_3" src="./frames/frame_3.png" class="frame-style">
+        <button id="generate_btn">Generate</button>
+        <br />
+        <br />
+        <!-- result preview -->
+        <div class="preview_container">
+          <canvas id="img_canvas"></canvas>
+          <br />
+          <div class="frame_container">
+            <button id="save_img">Save Image</button>
+            <img id="frame_1" src="./frames/frame.png" class="frame-style" />
+            <img id="frame_2" src="./frames/frame_2.png" class="frame-style" />
+            <img id="frame_3" src="./frames/frame_3.png" class="frame-style" />
+          </div>
+        </div>
+      </div>
 
+      <!-- decoration images -->
+      <div>
+        <img
+          src="./deco_img/animal_character_hamster_happy.png"
+          alt=""
+          draggable="true"
+          id="test_1"
+          class="sticker"
+        />
+        <img
+          src="./deco_img/smallflower_ppink.png"
+          alt=""
+          draggable="true"
+          id="test_2"
+          class="sticker"
+        />
+        <img
+          src="./deco_img/smallflower_pyellow.png"
+          alt=""
+          draggable="true"
+          id="test_3"
+          class="sticker"
+        />
+      </div>
+    </main>
 
     <script src="./polaroid.js"></script>
-</body>
+  </body>
 </html>
