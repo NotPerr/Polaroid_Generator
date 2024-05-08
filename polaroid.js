@@ -47,34 +47,34 @@ dragSources.forEach((dragSource) => {
 });
 
 function touchStart(e) {
-  // Prevent default touch behavior to prevent scrolling
-  e.preventDefault();
+  // Get the touch position
   let touch = e.touches[0];
-  // Initiate the drag operation
-  dragStart({
-    dataTransfer: {
-      setData: function () {}, // Touch events don't support dataTransfer
-    },
-    target: e.target,
-    clientX: touch.clientX,
-    clientY: touch.clientY,
-  });
+  // Store the touch coordinates
+  e.target.dataset.touchX = touch.clientX;
+  e.target.dataset.touchY = touch.clientY;
 }
 
 function touchMove(e) {
-  e.preventDefault();
-  // Get the touch position
   let touch = e.touches[0];
-  // Update the position of the dragged element
-  draggedElement.style.left = touch.clientX + "px";
-  draggedElement.style.top = touch.clientY + "px";
+  let target = e.target;
+  // Retrieve the initial touch coordinates from the dataset
+  let initialX = parseInt(target.dataset.touchX);
+  let initialY = parseInt(target.dataset.touchY);
+  // Calculate the distance moved
+  let deltaX = touch.clientX - initialX;
+  let deltaY = touch.clientY - initialY;
+  // Perform the drag operation by updating the element's position
+  target.style.left = target.offsetLeft + deltaX + "px";
+  target.style.top = target.offsetTop + deltaY + "px";
+  // Update the touch coordinates in the dataset for the next move event
+  target.dataset.touchX = touch.clientX;
+  target.dataset.touchY = touch.clientY;
 }
 
 function touchEnd(e) {
-  e.preventDefault();
-  // Remove touch move and end event listeners
-  //document.removeEventListener("touchmove", touchMove);
-  //document.removeEventListener("touchend", touchEnd);
+  // Remove the touch coordinates from the dataset
+  delete e.target.dataset.touchX;
+  delete e.target.dataset.touchY;
 }
 
 function dragStart(e) {
