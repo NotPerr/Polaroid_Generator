@@ -52,8 +52,8 @@ function touchStart(e) {
   // Get the touch position
   let touch = e.touches[0];
   // Store the touch coordinates
-  e.target.dataset.touchX = touch.clientX;
-  e.target.dataset.touchY = touch.clientY;
+  e.target.dataset.touchX = touch.pageX;
+  e.target.dataset.touchY = touch.pageY;
 }
 
 function touchMove(e) {
@@ -63,8 +63,8 @@ function touchMove(e) {
   let initialX = parseInt(target.dataset.touchX);
   let initialY = parseInt(target.dataset.touchY);
   // Calculate the distance moved
-  let deltaX = touch.clientX - initialX;
-  let deltaY = touch.clientY - initialY;
+  let deltaX = touch.pageX - initialX;
+  let deltaY = touch.pageY - initialY;
   // Perform the drag operation by updating the element's position
   target.style.left = target.offsetLeft + deltaX + "px";
   target.style.top = target.offsetTop + deltaY + "px";
