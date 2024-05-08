@@ -43,7 +43,40 @@ let draggedElementIds = [];
 let dragSources = document.querySelectorAll('[draggable="true"]');
 dragSources.forEach((dragSource) => {
   dragSource.addEventListener("dragstart", dragStart);
+  dragSource.addEventListener("touchstart", touchStart);
 });
+
+function touchStart(e) {
+  // Prevent default touch behavior to prevent scrolling
+  e.preventDefault();
+  let touch = e.touches[0];
+  // Initiate the drag operation
+  dragStart({
+    dataTransfer: {
+      setData: function () {}, // Touch events don't support dataTransfer
+    },
+    target: e.target,
+    clientX: touch.clientX,
+    clientY: touch.clientY,
+  });
+}
+
+function touchMove(e) {
+  e.preventDefault();
+  // Get the touch position
+  let touch = e.touches[0];
+  // Update the position of the dragged element
+  draggedElement.style.left = touch.clientX + "px";
+  draggedElement.style.top = touch.clientY + "px";
+}
+
+function touchEnd(e) {
+  e.preventDefault();
+  // Remove touch move and end event listeners
+  //document.removeEventListener("touchmove", touchMove);
+  //document.removeEventListener("touchend", touchEnd);
+}
+
 function dragStart(e) {
   e.dataTransfer.setData("text/plain", e.target.id);
 }
@@ -52,6 +85,8 @@ let dropTarget = document.querySelector("#img_canvas");
 dropTarget.addEventListener("drop", dropped);
 dropTarget.addEventListener("dragenter", cancelDefault);
 dropTarget.addEventListener("dragover", cancelDefault);
+dropTarget.addEventListener("touchmove", touchMove); // Add touch move event listener
+dropTarget.addEventListener("touchend", touchEnd);
 
 // adjust sticker images size
 const adjustImagesSize = (ratio) => {
