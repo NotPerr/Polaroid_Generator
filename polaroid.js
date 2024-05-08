@@ -23,6 +23,19 @@ previewImg.height = 277;
 
 let frame = document.querySelector("#frame_1");
 let hasGenerate = false; // to check if the user has generated an image or not
+// click on frame to change frame style
+const chooseStyle = (id) => {
+  if (!hasGenerate) return;
+  console.log(id);
+  frame = document.getElementById(id);
+  draw(frame);
+};
+
+for (let i = 0; i < choose_frame.length; i++) {
+  choose_frame[i].addEventListener("click", () => {
+    chooseStyle(choose_frame[i].id);
+  });
+}
 
 // decoration images
 // Define a global array to store the IDs of dragged elements
@@ -53,7 +66,9 @@ const adjustImagesSize = (ratio) => {
     image.style.height = naturalHeight * ratio + "px";
   });
 };
-adjustImagesSize(previewRatio);
+window.addEventListener("load", () => {
+  adjustImagesSize(previewRatio);
+});
 
 // handle image dropped
 function dropped(e) {
@@ -94,20 +109,6 @@ function cancelDefault(e) {
   e.preventDefault();
   e.stopPropagation();
   return false;
-}
-
-// click on frame to change frame style
-const chooseStyle = (id) => {
-  if (!hasGenerate) return;
-  console.log(id);
-  frame = document.getElementById(id);
-  draw(frame);
-};
-
-for (let i = 0; i < choose_frame.length; i++) {
-  choose_frame[i].addEventListener("click", () => {
-    chooseStyle(choose_frame[i].id);
-  });
 }
 
 // load upload image
