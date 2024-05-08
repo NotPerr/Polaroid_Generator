@@ -45,14 +45,6 @@ dragSources.forEach((dragSource) => {
   dragSource.addEventListener("dragstart", dragStart);
 });
 
-function touchStart(e) {
-  // Get the touch position
-  let touch = e.touches[0];
-  // Store the touch coordinates
-  e.target.dataset.touchX = touch.pageX;
-  e.target.dataset.touchY = touch.pageY;
-}
-
 function dragStart(e) {
   e.dataTransfer.setData("text/plain", e.target.id);
 }
