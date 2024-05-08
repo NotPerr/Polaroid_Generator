@@ -43,9 +43,6 @@ let draggedElementIds = [];
 let dragSources = document.querySelectorAll('[draggable="true"]');
 dragSources.forEach((dragSource) => {
   dragSource.addEventListener("dragstart", dragStart);
-  dragSource.addEventListener("touchstart", touchStart);
-  dragSource.addEventListener("touchmove", touchMove);
-  dragSource.addEventListener("touchend", touchEnd);
 });
 
 function touchStart(e) {
@@ -56,29 +53,6 @@ function touchStart(e) {
   e.target.dataset.touchY = touch.pageY;
 }
 
-function touchMove(e) {
-  let touch = e.touches[0];
-  let target = e.target;
-  // Retrieve the initial touch coordinates from the dataset
-  let initialX = parseInt(target.dataset.touchX);
-  let initialY = parseInt(target.dataset.touchY);
-  // Calculate the distance moved
-  let deltaX = touch.pageX - initialX;
-  let deltaY = touch.pageY - initialY;
-  // Perform the drag operation by updating the element's position
-  target.style.left = target.offsetLeft + deltaX + "px";
-  target.style.top = target.offsetTop + deltaY + "px";
-  // Update the touch coordinates in the dataset for the next move event
-  target.dataset.touchX = touch.clientX;
-  target.dataset.touchY = touch.clientY;
-}
-
-function touchEnd(e) {
-  // Remove the touch coordinates from the dataset
-  delete e.target.dataset.touchX;
-  delete e.target.dataset.touchY;
-}
-
 function dragStart(e) {
   e.dataTransfer.setData("text/plain", e.target.id);
 }
@@ -87,8 +61,6 @@ let dropTarget = document.querySelector("#img_canvas");
 dropTarget.addEventListener("drop", dropped);
 dropTarget.addEventListener("dragenter", cancelDefault);
 dropTarget.addEventListener("dragover", cancelDefault);
-dropTarget.addEventListener("touchmove", touchMove); // Add touch move event listener
-dropTarget.addEventListener("touchend", touchEnd);
 
 // adjust sticker images size
 const adjustImagesSize = (ratio) => {
