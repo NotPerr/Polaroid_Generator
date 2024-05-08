@@ -44,6 +44,8 @@ let dragSources = document.querySelectorAll('[draggable="true"]');
 dragSources.forEach((dragSource) => {
   dragSource.addEventListener("dragstart", dragStart);
   dragSource.addEventListener("touchstart", touchStart);
+  dragSource.addEventListener("touchmove", touchMove);
+  dragSource.addEventListener("touchend", touchEnd);
 });
 
 function touchStart(e) {
