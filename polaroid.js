@@ -118,6 +118,10 @@ const loadImage = () => {
   let file = fileInput.files[0];
   if (!file) return;
   previewImg.src = URL.createObjectURL(file);
+  previewImg.onload = () => {
+    let r = previewImg.naturalHeight / previewImg.naturalWidth;
+    previewImg.height = 220 * r;
+  };
 };
 
 // draw preview canvas
