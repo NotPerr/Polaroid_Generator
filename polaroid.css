@@ -1,28 +1,25 @@
-/* preview image */
-#img_canvas {
-  border: 1px solid grey;
-
-  margin-bottom: 40px;
-}
-
 .frame-style {
   width: 63.25px;
   cursor: pointer;
 }
 
 main {
+  width: 100vw;
 }
 
 .preview_container {
   display: flex;
 }
 
+/* preview image */
+#img_canvas {
+  margin-bottom: 40px;
+}
+
 .frame_container {
   margin: 20px;
 }
 
-@media (min-width: 800px) {
-  main {
-    display: flex;
-  }
+.upload-section {
+  width: 100%;
 }

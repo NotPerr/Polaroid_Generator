@@ -5,6 +5,11 @@ const fileInput = document.querySelector("#file_input"),
   saveImgBtn = document.querySelector("#save_img"),
   choose_frame = document.querySelectorAll(".frame-style");
 
+generateBtn.disabled = true;
+saveImgBtn.disabled = true;
+
+let hasGenerate = false; // to check if the user has generated an image or not
+
 let previewRatio = 0.5;
 const updatePreviewRatio = () => {
   // Get the device width
@@ -19,10 +24,9 @@ updatePreviewRatio();
 window.addEventListener("resize", updatePreviewRatio);
 
 previewImg.width = 220;
-previewImg.height = 277;
+previewImg.height = (220 * previewImg.naturalHeight) / previewImg.naturalWidth;
 
 let frame = document.querySelector("#frame_1");
-let hasGenerate = false; // to check if the user has generated an image or not
 // click on frame to change frame style
 const chooseStyle = (id) => {
   if (!hasGenerate) return;
@@ -121,6 +125,7 @@ const loadImage = () => {
   previewImg.onload = () => {
     let r = previewImg.naturalHeight / previewImg.naturalWidth;
     previewImg.height = 220 * r;
+    generateBtn.disabled = false;
   };
 };
 
@@ -128,6 +133,7 @@ const loadImage = () => {
 const draw = (frame) => {
   console.log("draw");
   hasGenerate = true;
+  saveImgBtn.disabled = false;
   let imgRatio = previewImg.naturalHeight / previewImg.naturalWidth;
   let canvas = document.getElementById("img_canvas");
   // Get the device width
