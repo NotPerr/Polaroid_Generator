@@ -1,6 +1,5 @@
-.frame-style {
-  width: 63.25px;
-  cursor: pointer;
+body {
+  background-color: #fdf8f0;
 }
 
 main {
@@ -9,15 +8,29 @@ main {
 
 .preview_container {
   display: flex;
+  flex-wrap: wrap;
+}
+
+.frame-text {
+  width: 20%;
+}
+.frame_container {
+  width: 80%;
+}
+
+.frame-style {
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid #ddccbc;
+  margin-right: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 /* preview image */
 #img_canvas {
   margin-bottom: 40px;
-}
-
-.frame_container {
-  margin: 20px;
+  border: 2px solid #ddccbc;
 }
 
 .upload-section {
