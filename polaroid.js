@@ -14,14 +14,14 @@ let previewRatio = 0.5;
 const updatePreviewRatio = () => {
   // Get the device width
   let deviceWidth = window.innerWidth;
-  if (deviceWidth >= 800) {
+  console.log("deviceWidth: ", deviceWidth);
+  if (deviceWidth >= 870) {
     previewRatio = 0.8;
-  } else {
-    previewRatio = 0.5;
   }
 };
 updatePreviewRatio();
 window.addEventListener("resize", updatePreviewRatio);
+console.log("previewRatio: ", previewRatio);
 
 previewImg.width = 220;
 previewImg.height = (220 * previewImg.naturalHeight) / previewImg.naturalWidth;
