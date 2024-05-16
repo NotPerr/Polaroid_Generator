@@ -22,7 +22,6 @@ const updatePreviewRatio = () => {
 updatePreviewRatio();
 window.addEventListener("resize", updatePreviewRatio);
 console.log("previewRatio: ", previewRatio);
-
 previewImg.width = 220;
 previewImg.height = (220 * previewImg.naturalHeight) / previewImg.naturalWidth;
 
