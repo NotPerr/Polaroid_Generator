@@ -1,11 +1,110 @@
+* {
+  box-sizing: border-box;
+  color: #353535;
+}
 
-#img_canvas {
-    border:1px solid grey;
-    width: 126.5px;
-    height: 200.5px;
+body {
+  background-color: #fdf8f0;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  width: 80%;
+  margin: auto;
+}
+
+button {
+  background: #c65646;
+  color: #fdf8f0;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  height: 2rem;
+  border-radius: 5px;
+}
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.preview-img {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.preview_container {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.preview_save {
+  width: 100%;
+  margin-top: 1rem;
+}
+.preview_save > div {
+  display: flex;
+  flex-direction: column;
+}
+.save-btn-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.frame-text {
+  display: block;
+  margin-right: 1rem;
+}
+.frame_container {
+  width: 80%;
+  display: flex;
+  align-items: center;
 }
 
 .frame-style {
-    width: 63.25px;
-    cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid #ddccbc;
+  margin-right: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* preview image */
+#img_canvas {
+  margin-bottom: 40px;
+  border: 2px solid #ddccbc;
+}
+
+.upload-section {
+  width: 100%;
+}
+
+.deco-img-container {
+  margin-top: 1rem;
+}
+.deco-img-container img {
+  cursor: grab;
+}
+
+@media screen and (min-width: 700px) {
+  .preview_save {
+    display: flex;
+  }
+  .save-btn-container {
+    flex-direction: row;
+  }
+  #img_canvas {
+    margin-right: 1rem;
+  }
 }
