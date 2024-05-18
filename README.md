@@ -2,7 +2,7 @@
 
 A simple polaroid generator that allows users to upload an image of any ratio and transform it into a Polaroid-style photo. Users can also decorate their Polaroid with flower stickers.
 <br /><br />
-![image](preview.gif)
+![image](preview.jpg)
 
 ## Features
 
