@@ -10,6 +10,8 @@ saveImgBtn.disabled = true;
 
 let hasGenerate = false; // to check if the user has generated an image or not
 
+let isAndroid = /(android)/i.test(navigator.userAgent);
+
 let previewRatio = 0.5;
 const updatePreviewRatio = () => {
   // Get the device width
@@ -44,18 +46,29 @@ for (let i = 0; i < choose_frame.length; i++) {
 // Define a global array to store the IDs of dragged elements
 let draggedElementIds = [];
 let dragSources = document.querySelectorAll('[draggable="true"]');
-dragSources.forEach((dragSource) => {
-  dragSource.addEventListener("dragstart", dragStart);
-});
-
-function dragStart(e) {
-  e.dataTransfer.setData("text/plain", e.target.id);
-}
-// drop decoration on preview image
 let dropTarget = document.querySelector("#img_canvas");
-dropTarget.addEventListener("drop", dropped);
-dropTarget.addEventListener("dragenter", cancelDefault);
-dropTarget.addEventListener("dragover", cancelDefault);
+
+// ======= for android device touch event =======
+if (isAndroid) {
+  dragSources.forEach((dragSource) => {
+    dragSource.addEventListener("touchstart", touchStart, { passive: false });
+    dragSource.addEventListener("touchmove", touchMove, { passive: false });
+    dragSource.addEventListener("touchend", touchEnd, { passive: false });
+  });
+} else {
+  function dragStart(e) {
+    e.dataTransfer.setData("text/plain", e.target.id);
+  }
+  // drop decoration on preview image
+
+  dropTarget.addEventListener("drop", dropped);
+  dropTarget.addEventListener("dragenter", cancelDefault);
+  dropTarget.addEventListener("dragover", cancelDefault);
+  // handling drag and drop event
+  dragSources.forEach((dragSource) => {
+    dragSource.addEventListener("dragstart", dragStart);
+  });
+}
 
 // adjust sticker images size
 const adjustImagesSize = (ratio) => {
@@ -113,6 +126,56 @@ function cancelDefault(e) {
   e.preventDefault();
   e.stopPropagation();
   return false;
+}
+
+// ----------------------
+// TOUCH EVENT HANDLERS
+// ----------------------
+let currentTouchSticker = null;
+
+function touchStart(e) {
+  e.preventDefault(); // prevent scrolling while dragging
+  currentTouchSticker = e.target;
+  // bring sticker to top
+  currentTouchSticker.style.position = "absolute";
+  currentTouchSticker.style.zIndex = 9999;
+}
+
+function touchMove(e) {
+  if (!currentTouchSticker) return;
+  let touch = e.touches[0];
+
+  // place sticker centered on finger
+  currentTouchSticker.style.left =
+    touch.pageX - (currentTouchSticker.naturalWidth * previewRatio) / 2 + "px";
+  currentTouchSticker.style.top =
+    touch.pageY - (currentTouchSticker.naturalHeight * previewRatio) / 2 + "px";
+}
+
+function touchEnd(e) {
+  if (!currentTouchSticker) return;
+
+  let previewCanvas = document.getElementById("img_canvas");
+  let rect = previewCanvas.getBoundingClientRect();
+
+  // final drop position
+  let touch = e.changedTouches[0];
+  let offsetX =
+    touch.pageX -
+    rect.x -
+    window.scrollX -
+    (currentTouchSticker.naturalWidth * previewRatio) / 2;
+  let offsetY =
+    touch.pageY -
+    rect.y -
+    window.scrollY -
+    (currentTouchSticker.naturalHeight * previewRatio) / 2;
+
+  currentTouchSticker.dataset.offsetX = offsetX;
+  currentTouchSticker.dataset.offsetY = offsetY;
+  draggedElementIds.push(currentTouchSticker.id);
+
+  currentTouchSticker = null;
 }
 
 // load upload image
