@@ -123,17 +123,6 @@ function dropped(e) {
 
   // Store the mouse's position when the item is dropped
   let dropPosition = { x: e.pageX, y: e.pageY };
-
-  const clientX = e.clientX; // viewport coords
-  const clientY = e.clientY;
-
-  // 1) check inside using client coords
-  if (!isInsideCanvasClient(clientX, clientY)) {
-    // outside → snap back
-    sticker.style.position = "static";
-    return;
-  }
-
   console.log(true);
   // Position the dragged element over the preview image
   draggedElement.style.position = "absolute";
