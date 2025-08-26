@@ -3,7 +3,8 @@ const fileInput = document.querySelector("#file_input"),
   previewImg = document.querySelector(".preview-img img"),
   generateBtn = document.querySelector("#generate_btn"),
   saveImgBtn = document.querySelector("#save_img"),
-  choose_frame = document.querySelectorAll(".frame-style");
+  choose_frame = document.querySelectorAll(".frame-style"),
+  previewCanvas = document.getElementById("img_canvas");
 
 generateBtn.disabled = true;
 saveImgBtn.disabled = true;
@@ -87,6 +88,26 @@ window.addEventListener("load", () => {
   adjustImagesSize(previewRatio);
 });
 
+function isInsideCanvasClient(clientX, clientY) {
+  const r = previewCanvas.getBoundingClientRect(); // viewport coords
+  return (
+    clientX >= r.left &&
+    clientX <= r.right &&
+    clientY >= r.top &&
+    clientY <= r.bottom
+  );
+}
+
+function canvasRectPage() {
+  const r = previewCanvas.getBoundingClientRect();
+  return {
+    left: r.left + window.scrollX,
+    top: r.top + window.scrollY,
+    width: r.width,
+    height: r.height,
+  };
+}
+
 // handle image dropped
 function dropped(e) {
   console.log("dropped");
@@ -96,13 +117,24 @@ function dropped(e) {
   draggedElementIds.push(id);
   let draggedElement = document.querySelector("#" + id);
   // Calculate the position relative to the preview canvas
-  let previewCanvas = document.getElementById("img_canvas");
+
   let rect = previewCanvas.getBoundingClientRect();
+  console.log(rect);
 
   // Store the mouse's position when the item is dropped
   let dropPosition = { x: e.pageX, y: e.pageY };
-  console.log("dropPosition: ", dropPosition);
 
+  const clientX = e.clientX; // viewport coords
+  const clientY = e.clientY;
+
+  // 1) check inside using client coords
+  if (!isInsideCanvasClient(clientX, clientY)) {
+    // outside → snap back
+    sticker.style.position = "static";
+    return;
+  }
+
+  console.log(true);
   // Position the dragged element over the preview image
   draggedElement.style.position = "absolute";
   let stickerPositionX =
@@ -160,6 +192,18 @@ function touchEnd(e) {
 
   // final drop position
   let touch = e.changedTouches[0];
+
+  const clientX = touch.clientX;
+  const clientY = touch.clientY;
+
+  if (!isInsideCanvasClient(clientX, clientY)) {
+    // outside → reset
+    currentTouchSticker.style.position = "static";
+    currentTouchSticker.style.zIndex = "auto";
+    currentTouchSticker = null;
+    return;
+  }
+
   let offsetX =
     touch.pageX -
     rect.x -
@@ -209,6 +253,7 @@ const draw = (frame) => {
   canvas.width = frame.naturalWidth * previewRatio;
   canvas.height = (468 * imgRatio + 182) * previewRatio;
   let ctx = canvas.getContext("2d");
+
   ctx.drawImage(
     frame,
     0,
